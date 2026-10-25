@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Dashboard - Doctor AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold">Welcome, {{ patient.name }}</h1>
+                <span class="badge bg-primary fs-6">Patient</span>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Appointments</h5>
+                            <h2 class="display-4">{{ total_appointments }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Upcoming</h5>
+                            <h2 class="display-4">{{ upcoming_appointments|length }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Completed</h5>
+                            <h2 class="display-4">{{ total_appointments - upcoming_appointments|length }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <a href="{{ url_for('patient.doctors') }}" class="btn btn-outline-primary w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-search fa-2x mb-2"></i>
+                        <span>Find Doctors</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ url_for('patient.appointments') }}" class="btn btn-outline-success w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-calendar fa-2x mb-2"></i>
+                        <span>My Appointments</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ url_for('ai.assistant') }}" class="btn btn-outline-info w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-robot fa-2x mb-2"></i>
+                        <span>AI Assistant</span>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ url_for('auth.profile') }}" class="btn btn-outline-secondary w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-user fa-2x mb-2"></i>
+                        <span>My Profile</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Upcoming Appointments -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Upcoming Appointments</h5>
+                    <a href="{{ url_for('patient.appointments') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_appointments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Specialization</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in upcoming_appointments %}
+                                <tr>
+                                    <td>{{ appointment.doctor_name }}</td>
+                                    <td>{{ appointment.specialization }}</td>
+                                    <td>{{ appointment.appointment_date|format_date }}</td>
+                                    <td>{{ appointment.appointment_time|format_time }}</td>
+                                    <td>
+                                        <span class="badge bg-{% if appointment.status == 'confirmed' %}success{% else %}warning{% endif %}">
+                                            {{ appointment.status|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('patient.cancel_appointment', appointment_id=appointment.appointment_id) }}" 
+                                           class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                                            Cancel
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted">No upcoming appointments</p>
+                        <a href="{{ url_for('patient.doctors') }}" class="btn btn-primary">Book an Appointment</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Patient Profile Summary -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">My Profile</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ patient.name }}</p>
+                            <p><strong>Email:</strong> {{ patient.email }}</p>
+                            <p><strong>Phone:</strong> {{ patient.phone or 'Not provided' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Date of Birth:</strong> {{ patient.date_of_birth or 'Not provided' }}</p>
+                            <p><strong>Gender:</strong> {{ patient.gender|capitalize if patient.gender else 'Not provided' }}</p>
+                            <p><strong>Address:</strong> {{ patient.address or 'Not provided' }}</p>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('auth.profile') }}" class="btn btn-outline-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

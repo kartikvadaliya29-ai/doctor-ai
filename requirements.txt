@@ -1,0 +1,14 @@
+# Doctor AI - Hospital Appointment Management System
+# Python Dependencies
+
+# Web Framework
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Database (optional - only needed if using MySQL)
+mysql-connector-python==8.2.0
+
+# Security
+bcrypt==4.1.2
+
+# Note: SQLite is built into Python, so no additional dependencies needed for SQLite mode

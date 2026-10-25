@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}About Doctor AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="fw-bold mb-4">About Doctor AI</h1>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Project Objective</h3>
+                    <p class="card-text">
+                        Doctor AI is a comprehensive Hospital Appointment Management System designed to 
+                        bridge the gap between patients and healthcare providers. Our platform leverages 
+                        modern web technologies and artificial intelligence to simplify the process of 
+                        finding doctors, booking appointments, and managing healthcare needs.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Problem Statement</h3>
+                    <p class="card-text">
+                        Traditional healthcare appointment booking systems are often inefficient, requiring 
+                        patients to make phone calls, visit clinics in person, or navigate complex booking 
+                        processes. Doctors struggle with managing their schedules and patient information 
+                        effectively. Doctor AI addresses these challenges by providing a centralized, 
+                        user-friendly platform that benefits both patients and healthcare providers.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Key Features</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">For Patients</h5>
+                            <ul>
+                                <li>Easy registration and profile management</li>
+                                <li>Search doctors by specialization and location</li>
+                                <li>View doctor profiles and availability</li>
+                                <li>Book appointments online</li>
+                                <li>Track appointment status and history</li>
+                                <li>AI-powered symptom checker</li>
+                                <li>Access medical records</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">For Doctors</h5>
+                            <ul>
+                                <li>Professional profile management</li>
+                                <li>Customizable availability schedule</li>
+                                <li>Appointment request management</li>
+                                <li>Patient information access</li>
+                                <li>Medical record creation</li>
+                                <li>Appointment history tracking</li>
+                                <li>Practice analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Technologies Used</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-info">Backend</h5>
+                            <ul>
+                                <li>Python</li>
+                                <li>Flask Framework</li>
+                                <li>MySQL Database</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-warning">Frontend</h5>
+                            <ul>
+                                <li>HTML5</li>
+                                <li>CSS3</li>
+                                <li>JavaScript</li>
+                                <li>Bootstrap 5</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="text-danger">Security</h5>
+                            <ul>
+                                <li>Password Hashing</li>
+                                <li>Session Management</li>
+                                <li>SQL Injection Prevention</li>
+                                <li>Role-based Access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Database Design</h3>
+                    <p class="card-text">
+                        The system uses a normalized MySQL database with the following key tables:
+                    </p>
+                    <ul>
+                        <li><strong>users:</strong> Authentication and user information</li>
+                        <li><strong>patients:</strong> Patient-specific details</li>
+                        <li><strong>doctors:</strong> Doctor profiles and qualifications</li>
+                        <li><strong>appointments:</strong> Appointment bookings and status</li>
+                        <li><strong>doctor_availability:</strong> Doctor schedule management</li>
+                        <li><strong>medical_records:</strong> Patient medical history</li>
+                        <li><strong>notifications:</strong> System notifications</li>
+                        <li><strong>ai_queries:</strong> AI assistant query history</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Educational Purpose</h3>
+                    <p class="card-text">
+                        This project demonstrates key concepts in:
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-secondary">Python Programming</h5>
+                            <ul>
+                                <li>Object-oriented programming</li>
+                                <li>Flask web framework</li>
+                                <li>Blueprint architecture</li>
+                                <li>Session management</li>
+                                <li>Form handling</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-secondary">Database Management</h5>
+                            <ul>
+                                <li>Database normalization</li>
+                                <li>Foreign key relationships</li>
+                                <li>CRUD operations</li>
+                                <li>SQL queries</li>
+                                <li>Transaction management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Important Note</h3>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Disclaimer:</strong> This is an educational project developed for college 
+                        demonstration purposes. The AI assistant feature uses simple rule-based logic and 
+                        should NOT be used for actual medical diagnosis or treatment. Always consult 
+                        qualified healthcare professionals for medical advice.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

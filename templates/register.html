@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Doctor AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Create Account</h2>
+                        <p class="text-muted">Join Doctor AI today</p>
+                    </div>
+                    
+                    <!-- Role Selection -->
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-primary w-100 role-btn 
+                                   {% if role == 'patient' or role is none %}active{% endif %}"
+                                   onclick="selectRole('patient')">
+                                <i class="fas fa-user"></i> Patient
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-success w-100 role-btn
+                                   {% if role == 'doctor' %}active{% endif %}"
+                                   onclick="selectRole('doctor')">
+                                <i class="fas fa-user-md"></i> Doctor
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('auth.register') }}" id="registerForm">
+                        <input type="hidden" name="role" id="role" value="{{ role or 'patient' }}">
+                        
+                        <!-- Common Fields -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required
+                                   placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required
+                                   placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required
+                                       placeholder="Create a password" minlength="6">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm_password" 
+                                       name="confirm_password" required
+                                       placeholder="Confirm your password" minlength="6">
+                            </div>
+                        </div>
+                        
+                        <!-- Patient-specific Fields -->
+                        <div id="patientFields" class="{% if role != 'doctor' %}d-block{% else %}d-none{% endif %}">
+                            <h5 class="mb-3 text-primary">Patient Information</h5>
+                            
+                            <div class="mb-3">
+                                <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                       {% if role != 'doctor' %}required{% endif %}>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select" id="gender" name="gender"
+                                        {% if role != 'doctor' %}required{% endif %}>
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea class="form-control" id="address" name="address" rows="3"
+                                          placeholder="Enter your address"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Doctor-specific Fields -->
+                        <div id="doctorFields" class="{% if role == 'doctor' %}d-block{% else %}d-none{% endif %}">
+                            <h5 class="mb-3 text-success">Doctor Information</h5>
+                            
+                            <div class="mb-3">
+                                <label for="specialization" class="form-label">Specialization</label>
+                                <select class="form-select" id="specialization" name="specialization"
+                                        {% if role == 'doctor' %}required{% endif %}>
+                                    <option value="">Select specialization</option>
+                                    <option value="General Physician">General Physician</option>
+                                    <option value="Cardiologist">Cardiologist</option>
+                                    <option value="Dermatologist">Dermatologist</option>
+                                    <option value="Dentist">Dentist</option>
+                                    <option value="Neurologist">Neurologist</option>
+                                    <option value="Ophthalmologist">Ophthalmologist</option>
+                                    <option value="Orthopedic">Orthopedic</option>
+                                    <option value="Pediatrician">Pediatrician</option>
+                                    <option value="Gynecologist">Gynecologist</option>
+                                    <option value="Psychiatrist">Psychiatrist</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="qualification" class="form-label">Qualification</label>
+                                <input type="text" class="form-control" id="qualification" name="qualification"
+                                       {% if role == 'doctor' %}required{% endif %}
+                                       placeholder="e.g., MBBS, MD">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="experience" class="form-label">Years of Experience</label>
+                                <input type="number" class="form-control" id="experience" name="experience"
+                                       {% if role == 'doctor' %}required{% endif %}
+                                       placeholder="Enter years of experience" min="0">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="hospital" class="form-label">Hospital/Clinic</label>
+                                <input type="text" class="form-control" id="hospital" name="hospital"
+                                       {% if role == 'doctor' %}required{% endif %}
+                                       placeholder="Enter hospital or clinic name">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location"
+                                       {% if role == 'doctor' %}required{% endif %}
+                                       placeholder="Enter city or area">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="consultation_fee" class="form-label">Consultation Fee ($)</label>
+                                <input type="number" class="form-control" id="consultation_fee" 
+                                       name="consultation_fee"
+                                       {% if role == 'doctor' %}required{% endif %}
+                                       placeholder="Enter consultation fee" min="0" step="0.01">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="bio" class="form-label">About/Bio</label>
+                                <textarea class="form-control" id="bio" name="bio" rows="3"
+                                          placeholder="Tell patients about yourself"></textarea>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Create Account</button>
+                    </form>
+                    
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Already have an account? 
+                            <a href="{{ url_for('auth.login') }}">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function selectRole(role) {
+    document.getElementById('role').value = role;
+    
+    // Update button styles
+    document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Show/hide relevant fields
+    if (role === 'patient') {
+        document.getElementById('patientFields').classList.remove('d-none');
+        document.getElementById('doctorFields').classList.add('d-none');
+        
+        // Set required attributes for patient fields
+        document.getElementById('date_of_birth').required = true;
+        document.getElementById('gender').required = true;
+        
+        // Remove required from doctor fields
+        document.getElementById('specialization').required = false;
+        document.getElementById('qualification').required = false;
+        document.getElementById('experience').required = false;
+        document.getElementById('hospital').required = false;
+        document.getElementById('location').required = false;
+        document.getElementById('consultation_fee').required = false;
+    } else {
+        document.getElementById('patientFields').classList.add('d-none');
+        document.getElementById('doctorFields').classList.remove('d-none');
+        
+        // Remove required from patient fields
+        document.getElementById('date_of_birth').required = false;
+        document.getElementById('gender').required = false;
+        
+        // Set required attributes for doctor fields
+        document.getElementById('specialization').required = true;
+        document.getElementById('qualification').required = true;
+        document.getElementById('experience').required = true;
+        document.getElementById('hospital').required = true;
+        document.getElementById('location').required = true;
+        document.getElementById('consultation_fee').required = true;
+    }
+}
+</script>
+{% endblock %}

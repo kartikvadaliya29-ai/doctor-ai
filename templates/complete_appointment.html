@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Appointment - Doctor Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold mb-4">Complete Appointment</h2>
+                    
+                    <!-- Appointment Info -->
+                    <div class="alert alert-info mb-4">
+                        <h5 class="alert-heading">Appointment Details</h5>
+                        <p class="mb-0"><strong>Patient:</strong> {{ appointment.patient_name }}</p>
+                        <p class="mb-0"><strong>Phone:</strong> {{ appointment.patient_phone }}</p>
+                        <p class="mb-0"><strong>Date:</strong> {{ appointment.appointment_date|format_date }}</p>
+                        <p class="mb-0"><strong>Time:</strong> {{ appointment.appointment_time|format_time }}</p>
+                        <p class="mb-0"><strong>Reason:</strong> {{ appointment.reason }}</p>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('doctor.complete_appointment', appointment_id=appointment.appointment_id) }}">
+                        <div class="mb-3">
+                            <label for="diagnosis" class="form-label">Diagnosis</label>
+                            <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3"
+                                      placeholder="Enter diagnosis">{% if appointment.diagnosis %}{{ appointment.diagnosis }}{% endif %}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Medical Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="4"
+                                      placeholder="Enter detailed medical notes">{% if appointment.notes %}{{ appointment.notes }}{% endif %}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="prescription" class="form-label">Prescription</label>
+                            <textarea class="form-control" id="prescription" name="prescription" rows="3"
+                                      placeholder="Enter prescription details">{% if appointment.prescription %}{{ appointment.prescription }}{% endif %}</textarea>
+                        </div>
+                        
+                        <div class="alert alert-warning small">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <strong>Note:</strong> Completing this appointment will mark it as "completed" 
+                            and save the medical record to the patient's history.
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">Complete & Save Record</button>
+                            <a href="{{ url_for('doctor.appointments') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
