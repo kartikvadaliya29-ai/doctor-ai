@@ -264,7 +264,8 @@ Stores AI assistant query history.
 
 ### Step 1: Clone or Download the Project
 ```bash
-cd "C:\Users\91883\Downloads\CAPSTON PROJECT"
+  git clone https://github.com/kartikvadaliya29-ai/doctor-ai.git
+  cd doctor-ai
 ```
 
 ### Step 2: Create MySQL Database
@@ -319,7 +320,7 @@ The application will start on `http://localhost:5000`
 mysql -u root -p
 
 # Execute the schema file
-source C:/Users/91883/Downloads/CAPSTON PROJECT/doctor_ai/database/schema.sql
+  source database/schema.sql
 
 # Exit MySQL
 exit
